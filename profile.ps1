@@ -11,6 +11,21 @@ function alias {
   $null = New-Item -Force -Path function: -Name "script:$alias_name" -Value "$full_commands"
 }
 
+function ssh-copy-id ($ssh_access_point, $ssh_public_key = "$HOME\.ssh\id_rsa.pub"){
+    $ssh_commands = "mkdir -p ~/.ssh && chmod 700 ~/.ssh && cat >> ~/.ssh/authorized_keys && chmod 600 ~/.ssh/authorized_keys"
+    Get-Content $ssh_public_key | ssh.exe $ssh_access_point $ssh_commands
+}
+
+function devvmstart($devvm_vmx_path = "$HOME\Documents\Virtual Machines\DevVM\DevVM.vmx"){
+    vmrun.exe -T player start $devvm_vmx_path nogui
+}
+function devvmstop ($devvm_vmx_path = "$HOME\Documents\Virtual Machines\DevVM\DevVM.vmx"){
+    vmrun.exe -T player start $devvm_vmx_path nogui
+}
+
+# path
+$env:PATH = "$env:PATH;C:\Program Files (x86)\VMware\VMware Player\"
+
 # aliases
 ## git
 alias "gst" "git status"
