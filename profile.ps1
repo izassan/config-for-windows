@@ -16,6 +16,24 @@ function ssh-copy-id ($ssh_access_point, $ssh_public_key = "$HOME\.ssh\id_rsa.pu
     Get-Content $ssh_public_key | ssh.exe $ssh_access_point $ssh_commands
 }
 
+function b64encode($str){
+    if(!$str){
+        return
+    }
+    $byte = ([System.Text.Encoding]::Default).GetBytes($str)
+    $b64enc = [Convert]::ToBase64String($byte)
+    echo $b64enc
+}
+
+function b64decode($b64_str){
+    if(!$b64_str){
+        return
+    }
+    $byte = [System.Convert]::FromBase64String($b64_str)
+    $str = [System.Text.Encoding]::Default.GetString($byte)
+    echo $str
+}
+
 function devvmstart($devvm_vmx_path = "$HOME\Documents\Virtual Machines\DevVM\DevVM.vmx"){
     vmrun.exe -T player start $devvm_vmx_path nogui
 }
